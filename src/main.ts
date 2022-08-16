@@ -1,10 +1,9 @@
-import { ValidationPipe } from '@nestjs/common';
+import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule, SwaggerDocumentOptions } from '@nestjs/swagger';
 import { PrismaClientExceptionFilter, PrismaService } from 'nestjs-prisma';
 import { AppModule } from './app.module';
-import { UsersModule } from 'src/users/users.module';
 import type {
   CorsConfig,
   NestConfig,
@@ -17,7 +16,7 @@ async function bootstrap() {
   // Validation
   app.useGlobalPipes(new ValidationPipe());
 
-  // enable shutdown hook
+  // Enable shutdown hook
   const prismaService: PrismaService = app.get(PrismaService);
   prismaService.enableShutdownHooks(app);
 
@@ -29,6 +28,15 @@ async function bootstrap() {
   const nestConfig = configService.get<NestConfig>('nest');
   const corsConfig = configService.get<CorsConfig>('cors');
   const swaggerConfig = configService.get<SwaggerConfig>('swagger');
+
+  // Setting API global
+  app.setGlobalPrefix('api');
+
+  // Enabling versioning
+  app.enableVersioning({
+    type: VersioningType.URI,
+    defaultVersion: nestConfig.defaultVersion,
+  });
 
   // Swagger Api
   if (swaggerConfig.enabled) {

@@ -8,6 +8,8 @@ export interface Config {
 
 export interface NestConfig {
   port: number;
+  defaultVersion: string;
+  availableVersions: [string];
 }
 
 export interface CorsConfig {
