@@ -9,6 +9,10 @@ const config: Config = {
   cors: {
     enabled: true,
   },
+  http: {
+    timeout: 5000,
+    maxRedirects: 5,
+  },
   swagger: {
     enabled: true,
     title: 'SPT',

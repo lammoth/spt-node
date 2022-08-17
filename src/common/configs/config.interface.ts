@@ -1,5 +1,6 @@
 export interface Config {
   nest: NestConfig;
+  http: HttpConfig;
   cors: CorsConfig;
   swagger: SwaggerConfig;
   graphql: GraphqlConfig;
@@ -10,6 +11,11 @@ export interface NestConfig {
   port: number;
   defaultVersion: string;
   availableVersions: [string];
+}
+
+export interface HttpConfig {
+  timeout: number;
+  maxRedirects: number;
 }
 
 export interface CorsConfig {

@@ -1,12 +1,11 @@
 import { Injectable } from '@nestjs/common';
+import type {
+  NestConfig,
+} from 'src/common/configs/config.interface';
 
 @Injectable()
 export class AppService {
-  getHello(): string {
-    return 'Hello World!';
-  }
-
-  getHelloName(name: string): string {
-    return `Hello ${name}!`;
+  getInfo(): any {
+    return {};
   }
 }

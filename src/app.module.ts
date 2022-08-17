@@ -1,5 +1,6 @@
 import { GraphQLModule } from '@nestjs/graphql';
-import { Logger, Module } from '@nestjs/common';
+import { Logger, Module} from '@nestjs/common';
+import { HttpModule } from '@nestjs/axios';
 import { ConfigModule } from '@nestjs/config';
 import { PrismaModule } from 'nestjs-prisma';
 import { AppController } from './app.controller';
@@ -11,6 +12,7 @@ import config from 'src/common/configs/config';
 import { loggingMiddleware } from 'src/common/middleware/logging.middleware';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { GqlConfigService } from './gql-config.service';
+import { CartoService } from './services/carto/carto.service';
 
 @Module({
   imports: [
@@ -27,10 +29,15 @@ import { GqlConfigService } from './gql-config.service';
       useClass: GqlConfigService,
     }),
 
+    HttpModule.register({
+      timeout: 5000,
+      maxRedirects: 5,
+    }),
+
     AuthModule,
     UsersModule,
   ],
   controllers: [AppController],
-  providers: [AppService, AppResolver],
+  providers: [AppService, AppResolver, CartoService],
 })
 export class AppModule {}
