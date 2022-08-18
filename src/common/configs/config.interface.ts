@@ -5,6 +5,7 @@ export interface Config {
   swagger: SwaggerConfig;
   graphql: GraphqlConfig;
   security: SecurityConfig;
+  carto: CartoConfig;
 }
 
 export interface NestConfig {
@@ -41,4 +42,10 @@ export interface SecurityConfig {
   expiresIn: string;
   refreshIn: string;
   bcryptSaltOrRound: string | number;
+}
+
+export interface CartoConfig {
+  baseUrl: string;
+  sqlUrl: string;
+  connection: string;
 }

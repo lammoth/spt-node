@@ -1,5 +1,3 @@
-
-import { AxiosResponse } from 'axios';
 import { Controller, Get, Post, Body } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CartoService } from 'src/services/carto/carto.service';

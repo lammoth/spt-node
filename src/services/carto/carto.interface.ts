@@ -1,33 +1,31 @@
-enum CartoMethods {
+export enum CartoMethods {
   get = "get",
   post = "post",
   delete = "delete"
 }
 
 export interface CartoMethod {
-  method: CartoMethods;
+  type: CartoMethods;
 }
 
 export interface CartoQueryPayload {
-  enabled: boolean;
-  title: string;
-  description: string;
-  version: string;
-  path: string;
+  q: string;
+  timeoutms: number;
 }
 
 export interface CartoQueryOptions {
-  enabled: boolean;
+  timeoutms: number;
 }
 
 export interface CartoJobPayload {
-  enabled: boolean;
-  title: string;
-  description: string;
-  version: string;
-  path: string;
+  metadata: string;
 }
 
 export interface CartoJobOptions {
-  enabled: boolean;
+  timeoutms: number;
+}
+
+export interface CartoJobListOptions {
+  created_since: string;
+  user_id: string;
 }

@@ -31,6 +31,11 @@ const config: Config = {
     refreshIn: '7d',
     bcryptSaltOrRound: 10,
   },
+  carto: {
+    baseUrl: 'https://gcp-us-east1.api.carto.com',
+    sqlUrl: '/v3/sql',
+    connection: 'test'
+  },
 };
 
 export default (): Config => config;

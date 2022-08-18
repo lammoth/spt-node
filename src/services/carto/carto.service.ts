@@ -1,32 +1,95 @@
-import { Observable, lastValueFrom } from 'rxjs'
-import { map, tap } from 'rxjs/operators';
+import { lastValueFrom } from 'rxjs'
+import { map } from 'rxjs/operators';
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from "@nestjs/config";
 import { HttpService } from '@nestjs/axios';
 import { AxiosResponse } from 'axios';
-import { CartoMethod, CartoQueryPayload, CartoQueryOptions, CartoJobPayload, CartoJobOptions } from './carto.interface';
+import { CartoMethod, CartoQueryPayload, CartoQueryOptions, CartoJobPayload, CartoJobOptions, CartoJobListOptions } from './carto.interface';
+import { sqlFormat } from 'src/common/utils/sql'
 
 @Injectable()
 export class CartoService {
-  constructor(private readonly httpService: HttpService) {}
+  constructor(
+    private readonly httpService: HttpService,
+    private readonly configService: ConfigService
+  ) {}
 
-  query(query: string, method: CartoMethod, payload?: CartoQueryPayload, options?: CartoQueryOptions): Observable<AxiosResponse<any>> {
-    return this.httpService.get('http://localhost:3000/api/v1').pipe(
-      tap((axiosResponse: AxiosResponse) => console.log(axiosResponse)),
+  async query(query: string, method: CartoMethod, payload?: CartoQueryPayload, options?: CartoQueryOptions): Promise<any> {
+    let requestConfig = {
+      baseURL: this.configService.get<string>('carto.baseUrl'),
+      url: `${this.configService.get<string>('carto.sqlUrl')}/${this.configService.get<string>('carto.connection')}/query`,
+      method: method.type
+    };
+
+    if (method.type === 'get') {
+      requestConfig['params'] = {
+        q: sqlFormat(query),
+        ...options
+      };
+    } else if (method.type === 'post') {
+      requestConfig['data'] = {
+        q: sqlFormat(query),
+        ...options
+      };
+    }
+    
+    const res = this.httpService.request(requestConfig).pipe(
       map(
         (axiosResponse: AxiosResponse) => {
           return axiosResponse.data;
         }
-      ),
-      tap((data) =>  console.log(data))
+      )
     );
+
+    return await lastValueFrom(res);
   }
 
-  job(query: string, method: CartoMethod, payload?: CartoJobPayload, id?: string, options?: CartoJobOptions): Observable<AxiosResponse<any>> {
-    return this.httpService.get('http://localhost:3000/api/v1');
+  async job(method: CartoMethod, query?: string, payload?: CartoJobPayload, id?: string, options?: CartoJobOptions): Promise<any> {
+    let requestConfig = {
+      baseURL: this.configService.get<string>('carto.baseUrl'),
+      url: `${this.configService.get<string>('carto.sqlUrl')}/${this.configService.get<string>('carto.connection')}/job`,
+      method: method.type
+    };
+
+    if (id) {
+      requestConfig['url'] = `${requestConfig['url']}/${id}`
+    }
+
+    if (method.type === 'post') {
+      requestConfig['params'] = {
+        ...options
+      };
+      requestConfig['data'] = {
+        query: sqlFormat(query),
+        ...payload
+      };
+    } else {
+      requestConfig['url'] = `/api/v1/${id}`;
+      requestConfig['params'] = {
+        ...options
+      };
+    }
+    
+    const res = this.httpService.request(requestConfig).pipe(
+      map(
+        (axiosResponse: AxiosResponse) => {
+          return axiosResponse.data;
+        }
+      )
+    );
+
+    return await lastValueFrom(res);
   }
 
-  async jobs(): Promise<any> {
-    const res = this.httpService.get('http://localhost:3000/api/v1/info').pipe(
+  async jobs(options?: CartoJobListOptions): Promise<any> {
+    const requestConfig = {
+      baseURL: this.configService.get<string>('carto.baseUrl'),
+      url: `${this.configService.get<string>('carto.sqlUrl')}/jobs`,
+      method: 'get',
+      params: { ...options }
+    };
+    console.log(requestConfig)
+    const res = this.httpService.request(requestConfig).pipe(
       map(
         (axiosResponse: AxiosResponse) => {
           return axiosResponse.data;
