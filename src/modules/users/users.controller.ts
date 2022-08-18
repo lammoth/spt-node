@@ -1,6 +1,8 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CartoService } from 'src/services/carto/carto.service';
+import { CartoAuthGuard } from 'src/modules/auth/carto-auth.guard';
+//import { AuthGuard } from '@nestjs/passport';
 
 // import { UserPasswordData } from './users.model';
 
@@ -14,13 +16,10 @@ export class UsersController {
     private readonly cartoService: CartoService
   ) {}
 
+  @UseGuards(CartoAuthGuard)
+  //@UseGuards(AuthGuard('carto'))
   @Get('cartotest')
   async test_carto(): Promise<any> {
-    return await this.cartoService.jobs();
-  }
-
-  @Post()
-  changePassword(@Body() userPasswordData: string): Promise<boolean> {
-    return this.usersService.changePassword(userPasswordData);
+    //return await this.cartoService.jobs();
   }
 }

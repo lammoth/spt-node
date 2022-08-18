@@ -11,7 +11,7 @@ export interface Config {
 export interface NestConfig {
   port: number;
   defaultVersion: string;
-  availableVersions: [string];
+  availableVersions: string[];
 }
 
 export interface HttpConfig {
@@ -48,4 +48,12 @@ export interface CartoConfig {
   baseUrl: string;
   sqlUrl: string;
   connection: string;
+  auth: CartoAuth;
+}
+
+export interface CartoAuth {
+  domain: string;
+  audience: string[];
+  clientId: string;
+  clientSecret: string;
 }

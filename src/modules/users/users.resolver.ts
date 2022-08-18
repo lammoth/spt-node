@@ -45,8 +45,8 @@ export class UsersResolver {
   ) {
     return this.usersService.changePassword(
       user.id,
-      // user.password,
-      // changePassword
+      user.password,
+      changePassword
     );
   }
 }

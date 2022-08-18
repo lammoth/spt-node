@@ -3,8 +3,8 @@ import type { Config } from './config.interface';
 const config: Config = {
   nest: {
     port: 3000,
-    defaultVersion: '1',
-    availableVersions: ['1',],
+    defaultVersion: "1",
+    availableVersions: ["1",],
   },
   cors: {
     enabled: true,
@@ -15,26 +15,35 @@ const config: Config = {
   },
   swagger: {
     enabled: true,
-    title: 'SPT',
-    description: 'Carto SPT API',
-    version: '0.0.1',
-    path: 'api_docs',
+    title: "SPT",
+    description: "Carto SPT API",
+    version: "0.0.1",
+    path: "api_docs",
   },
   graphql: {
     playgroundEnabled: true,
     debug: true,
-    schemaDestination: './src/schema.graphql',
+    schemaDestination: "./src/schema.graphql",
     sortSchema: true,
   },
   security: {
-    expiresIn: '2m',
-    refreshIn: '7d',
+    expiresIn: "2m",
+    refreshIn: "7d",
     bcryptSaltOrRound: 10,
   },
   carto: {
-    baseUrl: 'https://gcp-us-east1.api.carto.com',
-    sqlUrl: '/v3/sql',
-    connection: 'test'
+    baseUrl: "https://gcp-us-east1.api.carto.com",
+    sqlUrl: "/v3/sql",
+    connection: "development",
+    auth: {
+      domain: "https://auth.carto.com",
+      audience: [
+        "carto-cloud-native-api",
+        "https://carto-production.us.auth0.com/userinfo"
+      ],
+      clientId: '2s1kgx2ehVo9QcPrvdK4BOjOicret6bB',
+      clientSecret: 'sasasa',
+    }
   },
 };
 

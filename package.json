@@ -72,6 +72,7 @@
     "graphql": "16.5.0",
     "graphql-scalars": "1.17.0",
     "graphql-subscriptions": "2.0.0",
+    "jwks-rsa": "^2.1.4",
     "nestjs-prisma": "0.17.0",
     "passport": "0.6.0",
     "passport-jwt": "4.0.0",
