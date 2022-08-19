@@ -88,7 +88,6 @@ export class CartoService {
       method: 'get',
       params: { ...options }
     };
-    console.log(requestConfig)
     const res = this.httpService.request(requestConfig).pipe(
       map(
         (axiosResponse: AxiosResponse) => {

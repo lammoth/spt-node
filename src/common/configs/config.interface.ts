@@ -48,12 +48,4 @@ export interface CartoConfig {
   baseUrl: string;
   sqlUrl: string;
   connection: string;
-  auth: CartoAuth;
-}
-
-export interface CartoAuth {
-  domain: string;
-  audience: string[];
-  clientId: string;
-  clientSecret: string;
 }

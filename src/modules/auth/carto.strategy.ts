@@ -13,20 +13,16 @@ export class CartoStrategy extends PassportStrategy(Strategy, 'carto') {
         cache: true,
         rateLimit: true,
         jwksRequestsPerMinute: 5,
-        jwksUri: `https://${configService.get<string>(
-          'auth.domain',
-        )}/.well-known/jwks.json`,
+        jwksUri: `${configService.get<string>('auth.domain')}/.well-known/jwks.json`,
       }),
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       audience: configService.get<string[]>('auth.audience'),
-      issuer: `https://${configService.get<string>('auth.domain')}/`,
+      issuer: `${configService.get<string>('auth.domain')}/`,
       algorithms: ['RS256'],
     });
   }
 
   validate(payload: JwtPayload): JwtPayload {
-    console.log('**********************')
-    console.log(payload)
     const minimumScope = ['openid', 'profile', 'email'];
 
     if (
