@@ -14,19 +14,22 @@ export class CartoService {
     private readonly configService: ConfigService
   ) {}
 
-  async query(query: string, method: CartoMethod, payload?: CartoQueryPayload, options?: CartoQueryOptions): Promise<any> {
+  async query(token: string, query: string, method: CartoMethod, payload?: CartoQueryPayload, options?: CartoQueryOptions): Promise<any> {
     let requestConfig = {
       baseURL: this.configService.get<string>('carto.baseUrl'),
       url: `${this.configService.get<string>('carto.sqlUrl')}/${this.configService.get<string>('carto.connection')}/query`,
-      method: method.type
+      method: method.type,
+      headers: {
+        "Authorization": token 
+      }
     };
 
-    if (method.type === 'get') {
+    if (method.type === "get") {
       requestConfig['params'] = {
         q: sqlFormat(query),
         ...options
       };
-    } else if (method.type === 'post') {
+    } else if (method.type === "post") {
       requestConfig['data'] = {
         q: sqlFormat(query),
         ...options
@@ -44,18 +47,22 @@ export class CartoService {
     return await lastValueFrom(res);
   }
 
-  async job(method: CartoMethod, query?: string, payload?: CartoJobPayload, id?: string, options?: CartoJobOptions): Promise<any> {
+  async job(token: string, method: CartoMethod, query?: string, payload?: CartoJobPayload, id?: string, options?: CartoJobOptions): Promise<any> {
     let requestConfig = {
       baseURL: this.configService.get<string>('carto.baseUrl'),
       url: `${this.configService.get<string>('carto.sqlUrl')}/${this.configService.get<string>('carto.connection')}/job`,
-      method: method.type
+      method: method.type,
+      headers: {
+        "Authorization": token 
+      }
     };
 
     if (id) {
-      requestConfig['url'] = `${requestConfig['url']}/${id}`
+      const urlWithId = `${requestConfig.url}/${id}`
+      requestConfig['url'] = urlWithId
     }
 
-    if (method.type === 'post') {
+    if (method.type === "post") {
       requestConfig['params'] = {
         ...options
       };
@@ -64,12 +71,11 @@ export class CartoService {
         ...payload
       };
     } else {
-      requestConfig['url'] = `/api/v1/${id}`;
       requestConfig['params'] = {
         ...options
       };
     }
-    
+
     const res = this.httpService.request(requestConfig).pipe(
       map(
         (axiosResponse: AxiosResponse) => {
@@ -81,12 +87,15 @@ export class CartoService {
     return await lastValueFrom(res);
   }
 
-  async jobs(options?: CartoJobListOptions): Promise<any> {
+  async jobs(token: string, options?: CartoJobListOptions): Promise<any> {
     const requestConfig = {
       baseURL: this.configService.get<string>('carto.baseUrl'),
       url: `${this.configService.get<string>('carto.sqlUrl')}/jobs`,
-      method: 'get',
-      params: { ...options }
+      method: "get",
+      params: { ...options },
+      headers: {
+        "Authorization": token 
+      }
     };
     const res = this.httpService.request(requestConfig).pipe(
       map(
