@@ -7,18 +7,11 @@ import { PasswordService } from 'src/modules/auth/password.service';
 import { CartoService } from 'src/services/carto/carto.service';
 
 @Module({
-  imports: [
-    HttpModule.register({
-      timeout: 60000,
-      maxRedirects: 5,
-    }),
-  ],
   controllers: [UsersController],
   providers: [
     UsersResolver,
     UsersService,
     PasswordService,
-    CartoService,
   ],
 })
 export class UsersModule {}

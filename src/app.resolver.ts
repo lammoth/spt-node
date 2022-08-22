@@ -1,13 +1,14 @@
 import { Resolver, Query, Args } from '@nestjs/graphql';
+import { AppService } from './app.service';
 
 @Resolver()
 export class AppResolver {
+  constructor(
+    private appService: AppService
+  ) {}
+
   @Query(() => String)
-  helloWorld(): string {
-    return 'Hello World!';
-  }
-  @Query(() => String)
-  hello(@Args('name') name: string): string {
-    return `Hello ${name}!`;
+  info(): any {
+    return this.appService.getInfo();
   }
 }
