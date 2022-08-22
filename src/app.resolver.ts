@@ -1,5 +1,6 @@
 import { Resolver, Query, Args } from '@nestjs/graphql';
 import { AppService } from './app.service';
+import { NestConfig } from ./app.model';
 
 @Resolver()
 export class AppResolver {
@@ -7,8 +8,8 @@ export class AppResolver {
     private appService: AppService
   ) {}
 
-  @Query(() => String)
-  info(): any {
+  @Query(() => NestConfig)
+  info(): NestConfig {
     return this.appService.getInfo();
   }
 }

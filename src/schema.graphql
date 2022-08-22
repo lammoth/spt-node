@@ -39,8 +39,14 @@ type Mutation {
   updateUser(data: UpdateUserInput!): User!
 }
 
+type NestConfig {
+  availableVersions: [String!]!
+  defaultVersion: String!
+  port: Int!
+}
+
 type Query {
-  info: String!
+  info: NestConfig!
   me: User!
 }
 
