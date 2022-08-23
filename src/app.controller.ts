@@ -19,23 +19,6 @@ export class AppController {
   @UseGuards(CartoAuthGuard)
   @Get('services/carto/test')
   async cartoTest(@Request() req): Promise<any> {
-    // return await this.cartoService.query(
-    //   req.headers.authorization,
-    //   "select sum(1) from app_initiative_analysisaudience",
-    //   <CartoMethod>{ type: "get" }
-    // );
-    // return await this.cartoService.job(
-    //   req.headers.authorization,
-    //   <CartoMethod>{ type: "post" },
-    //   "select sum(1) from app_initiative_analysisaudience"
-    // );
-    return await this.cartoService.job(
-      req.headers.authorization,
-      <CartoMethod>{ type: "get" },
-      undefined,
-      undefined,
-      "757fa49c-b326-4d44-8850-dafb811e1a20"
-    )
-    //return await this.cartoService.jobs(req.headers.authorization);
+    return await this.cartoService.jobs(req.headers.authorization);
   }
 }
