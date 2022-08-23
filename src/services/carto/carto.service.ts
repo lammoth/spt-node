@@ -14,6 +14,28 @@ export class CartoService {
     private readonly configService: ConfigService
   ) {}
 
+  /**
+   * This function launches a query on Carto3.
+   *
+   * @param {String} token - JWT Carto3 Token 
+   * @param {String} query - Query to be executed
+   * @param {CartoMethod} method - HTTP method to be used
+   * @param {CartoQueryPayload} payload - HTTP POST payload
+   * @param {CartoQueryOptions} options - HTTP GET options
+   *
+   * @returns {Promise<any>} Promise with the response or rejects with an error message if the request fails.
+   *
+   * @example
+   * ```ts
+   * return await this.cartoService.query(
+   *  req.headers.authorization,
+   *  "select 1",
+   *  <CartoMethod>{ type: "get" }
+   * );
+   * ```
+   *
+   * @alpha
+   */
   async query(token: string, query: string, method: CartoMethod, payload?: CartoQueryPayload, options?: CartoQueryOptions): Promise<any> {
     let requestConfig = {
       baseURL: this.configService.get<string>('carto.baseUrl'),
@@ -32,7 +54,7 @@ export class CartoService {
     } else if (method.type === "post") {
       requestConfig['data'] = {
         q: sqlFormat(query),
-        ...options
+        ...payload
       };
     }
     
@@ -47,6 +69,29 @@ export class CartoService {
     return await lastValueFrom(res);
   }
 
+  /**
+   * This function launches a job on Carto3.
+   *
+   * @param {String} token - JWT Carto3 Token 
+   * @param {CartoMethod} method - HTTP method to be used
+   * @param {String} query - Query to be executed
+   * @param {CartoJobPayload} payload - HTTP POST payload
+   * @param {String} id - ID to be requested
+   * @param {CartoJobOptions} options - HTTP GET options
+   *
+   * @returns {Promise<any>} Promise with the response or rejects with an error message if the request fails.
+   *
+   * @example
+   * ```ts
+   * return await this.cartoService.job(
+   *  req.headers.authorization,
+   *  <CartoMethod>{ type: "post" },
+   *  "select 1"
+   * );
+   * ```
+   *
+   * @alpha
+   */
   async job(token: string, method: CartoMethod, query?: string, payload?: CartoJobPayload, id?: string, options?: CartoJobOptions): Promise<any> {
     let requestConfig = {
       baseURL: this.configService.get<string>('carto.baseUrl'),
@@ -87,6 +132,23 @@ export class CartoService {
     return await lastValueFrom(res);
   }
 
+  /**
+   * This function retrieves a job list fron Carto3.
+   *
+   * @param {String} token - JWT Carto3 Token 
+   * @param {CartoJobListOptions} options - HTTP GET options
+   *
+   * @returns {Promise<any>} Promise with the response or rejects with an error message if the request fails.
+   *
+   * @example
+   * ```ts
+   * return await this.cartoService.jobs(
+   *  req.headers.authorization,
+   * );
+   * ```
+   *
+   * @alpha
+   */
   async jobs(token: string, options?: CartoJobListOptions): Promise<any> {
     const requestConfig = {
       baseURL: this.configService.get<string>('carto.baseUrl'),

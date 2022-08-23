@@ -1,6 +1,6 @@
 import { Resolver, Query, Args } from '@nestjs/graphql';
 import { AppService } from './app.service';
-import { NestConfig } from ./app.model';
+import { NestConfig } from './app.model';
 
 @Resolver()
 export class AppResolver {

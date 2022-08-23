@@ -9,7 +9,6 @@ export interface CartoMethod {
 }
 
 export interface CartoQueryPayload {
-  q: string;
   timeoutms: number;
 }
 
