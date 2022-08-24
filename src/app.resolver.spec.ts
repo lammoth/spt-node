@@ -10,7 +10,7 @@ describe('AppResolver', () => {
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
       imports: [
-        ConfigModule.forRoot({ isGlobal: true, load: [config] }),
+        ConfigModule.forRoot({ isGlobal: true, load: [config], envFilePath: '.env.test' }),
       ],
       providers: [AppResolver, AppService, ConfigService],
     }).compile();

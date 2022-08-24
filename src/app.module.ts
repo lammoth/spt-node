@@ -16,7 +16,7 @@ import { CartoService } from '@services/carto/carto.service';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true, load: [config] }),
+    ConfigModule.forRoot({ isGlobal: true, load: [config], envFilePath: '.env' }),
     PrismaModule.forRoot({
       isGlobal: true,
       prismaServiceOptions: {

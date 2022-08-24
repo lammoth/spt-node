@@ -2,39 +2,39 @@ import type { Config } from './config.interface';
 
 const config: Config = {
   nest: {
-    port: 3000,
-    defaultVersion: "1",
-    availableVersions: ["1",],
+    port: parseInt(process.env.NEST_PORT, 3000) || 3000,
+    defaultVersion: process.env.NEST_DEFAULT_VERSION.toString() || "1",
+    availableVersions: [process.env.NEST_DEFAULT_VERSION.toString() || "1",],
   },
   cors: {
     enabled: true,
   },
   http: {
-    timeout: 5000,
-    maxRedirects: 5,
+    timeout: parseInt(process.env.HTTP_TIMEOUT, 5000) || 5000,
+    maxRedirects: parseInt(process.env.HTTP_MAX_REDIRECTS, 5) || 5,
   },
   swagger: {
-    enabled: true,
-    title: "SPT",
-    description: "Carto SPT API",
-    version: "0.0.1",
-    path: "api_docs",
+    enabled: Boolean(process.env.SWAGGER_ENABLED),
+    title: process.env.SWAGGER_TITLE,
+    description: process.env.SWAGGER_DESCRIPTION,
+    version: process.env.SWAGGER_VERSION,
+    path: process.env.SWAGGER_PATH,
   },
   graphql: {
-    playgroundEnabled: true,
-    debug: true,
-    schemaDestination: "./src/schema.graphql",
-    sortSchema: true,
+    playgroundEnabled: Boolean(process.env.GRAPHQL_PLAYGROUND_ENABLED),
+    debug: Boolean(process.env.GRAPHQL_DEBUG),
+    schemaDestination: process.env.GRAPHQL_SCHEMA_DST,
+    sortSchema: Boolean(process.env.GRAPHQL_SCHEMA_SORT),
   },
   security: {
-    expiresIn: "2m",
-    refreshIn: "7d",
-    bcryptSaltOrRound: 10,
+    expiresIn: process.env.AUTH_EXPIRATION,
+    refreshIn: process.env.AUTH_REFRESH,
+    bcryptSaltOrRound: process.env.AUTH_SALT,
   },
   carto: {
-    baseUrl: "https://gcp-us-east1.api.carto.com",
-    sqlUrl: "/v3/sql",
-    connection: "development",
+    baseUrl: process.env.CARTO_BASE_URL,
+    sqlUrl: process.env.CARTO_SQL_URL,
+    connection: process.env.CARTO_CONNECTION,
   },
 };
 

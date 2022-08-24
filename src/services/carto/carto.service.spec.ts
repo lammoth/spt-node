@@ -10,7 +10,7 @@ describe('CartoService', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
-        ConfigModule.forRoot({ isGlobal: true, load: [config] }),
+        ConfigModule.forRoot({ isGlobal: true, load: [config], envFilePath: '.env.test' }),
         HttpModule.register({
           timeout: 5000,
           maxRedirects: 5,

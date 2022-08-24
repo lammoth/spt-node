@@ -10,7 +10,7 @@ describe('AppController', () => {
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
       imports: [
-        ConfigModule.forRoot({ isGlobal: true, load: [config] }),
+        ConfigModule.forRoot({ isGlobal: true, load: [config], envFilePath: '.env.test' }),
       ],
       controllers: [AppController],
       providers: [AppService, ConfigService],
