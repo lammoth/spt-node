@@ -1,7 +1,7 @@
 import { Controller, Request, Get, UseGuards } from '@nestjs/common';
 import { AppService } from './app.service';
-// import { CartoService } from 'src/services/carto/carto.service';
-// import { CartoAuthGuard } from 'src/services/carto/carto-auth.guard';
+// import { CartoService } from '@services/carto/carto.service';
+// import { CartoAuthGuard } from '@services/carto/carto-auth.guard';
 
 @Controller()
 export class AppController {

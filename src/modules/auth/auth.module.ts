@@ -5,13 +5,13 @@ import { PassportModule } from '@nestjs/passport';
 import { ConfigService } from '@nestjs/config';
 import { PasswordService } from './password.service';
 import { GqlAuthGuard } from './gql-auth.guard';
-import { CartoAuthGuard } from 'src/services/carto/carto-auth.guard';
+import { CartoAuthGuard } from '@services/carto/carto-auth.guard';
 import { AuthService } from './auth.service';
 import { AuthResolver } from './auth.resolver';
 import { JwtStrategy } from './jwt.strategy';
-import { CartoStrategy } from 'src/services/carto/carto.strategy';
-import { SecurityConfig } from 'src/common/configs/config.interface';
-import cartoAuthConfig from 'src/services/carto/configs/carto-auth.config';
+import { CartoStrategy } from '@services/carto/carto.strategy';
+import { SecurityConfig } from '@common/configs/config.interface';
+import cartoAuthConfig from '@services/carto/configs/carto-auth.config';
 
 @Module({
   imports: [

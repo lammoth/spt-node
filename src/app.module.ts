@@ -12,7 +12,7 @@ import config from '@common/configs/config';
 import { loggingMiddleware } from 'src/common/middleware/logging.middleware';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { GqlConfigService } from './gql-config.service';
-import { CartoService } from './services/carto/carto.service';
+import { CartoService } from '@services/carto/carto.service';
 
 @Module({
   imports: [

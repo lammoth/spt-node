@@ -4,7 +4,7 @@ import {
   HideField,
   Field,
 } from '@nestjs/graphql';
-import { BaseModel } from 'src/common/models/base.model';
+import { BaseModel } from '@common/models/base.model';
 import { Role } from '@prisma/client';
 import { ChangePasswordInput } from '../dto/change-password.input';
 

@@ -111,7 +111,8 @@
   },
   "jest": {
     "moduleNameMapper": {
-      "^@common/(.*)$": "<rootDir>/common/$1"
+      "^@common/(.*)$": "<rootDir>/common/$1",
+      "^@services/(.*)$": "<rootDir>/services/$1"
     },
     "moduleFileExtensions": [
       "js",
