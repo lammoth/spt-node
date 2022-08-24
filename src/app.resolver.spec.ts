@@ -1,30 +1,26 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { Chance } from 'chance';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppResolver } from './app.resolver';
 import { AppService } from './app.service';
-
-const chance = new Chance();
+import config from '@common/configs/config';
 
 describe('AppResolver', () => {
   let appResolver: AppResolver;
 
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
-      providers: [AppResolver, AppService],
+      imports: [
+        ConfigModule.forRoot({ isGlobal: true, load: [config] }),
+      ],
+      providers: [AppResolver, AppService, ConfigService],
     }).compile();
 
     appResolver = app.get<AppResolver>(AppResolver);
   });
 
-  describe('helloWorld', () => {
-    it('should return "Hello World!"', () => {
-      expect(appResolver.helloWorld()).toBe('Hello World!');
-    });
-  });
-  describe('hello', () => {
-    it('should return "Hello ${name}!"', () => {
-      const name = chance.name();
-      expect(appResolver.hello(name)).toBe(`Hello ${name}!`);
+  describe('info', () => {
+    it('should return Nest config', () => {
+      expect(appResolver.info()).toHaveProperty('port');
     });
   });
 });

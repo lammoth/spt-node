@@ -5,7 +5,7 @@ import { ConfigService } from "@nestjs/config";
 import { HttpService } from '@nestjs/axios';
 import { AxiosResponse } from 'axios';
 import { CartoMethod, CartoQueryPayload, CartoQueryOptions, CartoJobPayload, CartoJobOptions, CartoJobListOptions } from './carto.interface';
-import { sqlFormat } from 'src/common/utils/sql'
+import { sqlFormat } from '@common/utils/sql'
 
 @Injectable()
 export class CartoService {

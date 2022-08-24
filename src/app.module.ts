@@ -8,7 +8,7 @@ import { AppService } from './app.service';
 import { AppResolver } from './app.resolver';
 import { AuthModule } from 'src/modules/auth/auth.module';
 import { UsersModule } from 'src/modules/users/users.module';
-import config from 'src/common/configs/config';
+import config from '@common/configs/config';
 import { loggingMiddleware } from 'src/common/middleware/logging.middleware';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { GqlConfigService } from './gql-config.service';
